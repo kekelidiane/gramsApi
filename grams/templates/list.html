@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+<html lang="en">
+
+    {% block title%} Listes {% endblock %}
+    {% block content%}
+    
+    <body>
+        <div class='content'>
+    
+            <h4> All classroom </h4>
+            {% for classroom in classroom_list %}
+                <h5>
+                    <ul>
+                        <li>Id: {{ classroom.id }}</br>Name: {{ classroom.name }}</li>
+                    </ul>
+                </h5>
+            {% endfor %}
+            
+            <h4> All course </h4>
+            {% for course in course_list %}
+                <h5>
+                    <ul>
+                        <li>Id: {{ course.id }}</br> Name: {{ course.name }}</li>
+                    </ul>
+                </h5>
+            {% endfor %}
+
+            <h4> All student </h4>
+            {% for student in student_list %}
+                <h5>
+                    <ul>
+                        <li>Id: {{ student.id }}</br>Name: {{ student.name }}</li>
+                    </ul>
+                </h5>
+            {% endfor %}
+
+            
+
+
+        </div>
+    </body>
+    {% endblock %}
+
+</html>

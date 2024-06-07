@@ -1,0 +1,17 @@
+{% load static %}
+
+<html lang="en">
+
+    {% block title %} Main page {% endblock %}
+
+    <body>
+        {% block content %}
+            <ul>
+                <li><a href="{% include 'list.html' %}"> All lists </a></li>
+                <li><a href="{% include 'detail.html' %}"> All details </a></li>
+            </ul>
+        {% endblock %} 
+    </body>
+
+    
+</html>

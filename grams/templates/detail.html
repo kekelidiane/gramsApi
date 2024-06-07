@@ -1,0 +1,16 @@
+{% load static %}
+
+<html lang="en">
+
+    {% block title %} Détails {% endblock %}
+
+    <body>
+        {% block content %}
+
+            <h1>Détails de l'élément</h1>
+            <p>Nom: {{ classroom.name }}</p>
+            <p>Description: {{ classroom.description }}</p>
+        {% endblock %}
+        </body>
+    
+</html>
