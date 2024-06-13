@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -98,12 +97,12 @@ WSGI_APPLICATION = 'gramsApi.wsgi.application'
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'gramsdb',
-    'USER': 'diane',
-    'PASSWORD': 'dianePg19',
-    'HOST': '127.0.0.1',
-    'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'gramsdb',
+        'USER': 'diane',
+        'PASSWORD': 'dianePg19',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

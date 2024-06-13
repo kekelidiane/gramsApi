@@ -32,11 +32,22 @@ class EnseignantSerializer(serializers.ModelSerializer):
 
 #--------------------------------------------------
 
+class FiliereSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Filiere
+        fields = '__all__'
+
+#--------------------------------------------------
+
 class CoursSerializer(serializers.ModelSerializer):
+    option = serializers.SerializerMethodField()
+
     class Meta:
         model = Cours
         fields = '__all__'
-
+        
+    def get_option(self, obj):
+        return [filiere.nom for filiere in obj.option.all()]
 #--------------------------------------------------
 
 class ExamSerializer(serializers.ModelSerializer):
@@ -65,9 +76,3 @@ class DepartementSerializer(serializers.ModelSerializer):
         model = Departement
         fields = '__all__'
 
-#--------------------------------------------------
-
-class FiliereSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Filiere
-        fields = '__all__'

@@ -77,7 +77,7 @@ class Departement(models.Model):
     
 class Parcours(models.Model):
     id = models.AutoField(primary_key=True, editable=False, auto_created=True)
-    codeDep = models.CharField(max_length=10)
+    codePar = models.CharField(max_length=10)
     nom = models.CharField(max_length=250)
     
     def __str__(self):
@@ -87,7 +87,8 @@ class Filiere(models.Model):
     id = models.AutoField(primary_key=True, editable=False, auto_created=True)
     codeFiliere = models.CharField(max_length=10)
     nom = models.CharField(max_length=100)
-    departement = models.ForeignKey(Departement, on_delete=models.CASCADE)
+    parcours = models.ForeignKey(Departement, related_name="parcours", on_delete=models.CASCADE)
+    departement = models.ForeignKey(Departement, related_name="departement", on_delete=models.CASCADE)
     
     def __str__(self):
         return self.nom
@@ -96,11 +97,11 @@ class Cours(models.Model):
     id = models.AutoField(primary_key=True, editable=False, auto_created=True)
     codeUe = models.CharField(max_length=10)
     intitule = models.CharField(max_length=50)
-    prerequis = models.CharField(max_length=150)
+    prerequis = models.CharField(max_length=150, blank=True)
     semestre_evolution = models.ForeignKey(Semestre, related_name="semestre_evolution", on_delete=models.CASCADE)
     semestre_etude = models.ForeignKey(Semestre, related_name="semestre_etude" ,on_delete=models.CASCADE)
     enseignant = models.ForeignKey(Enseignant, on_delete=models.CASCADE)
-    option = models.ForeignKey(Filiere, on_delete=models.CASCADE)
+    option = models.ManyToManyField(Filiere)
     
     def __str__(self):
         return self.intitule
