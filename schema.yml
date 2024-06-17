@@ -1,0 +1,2911 @@
+#python manage.py spectacular --file schema.yml pour creer ce fichier
+openapi: 3.0.3
+info:
+  title: Grams API Project
+  version: 1.0.0
+  description: A sample project to resolve school problems
+paths:
+  /api/dj-rest-auth/login/:
+    post:
+      operationId: api_dj_rest_auth_login_create
+      description: |-
+        Check the credentials and return the REST Token
+        if the credentials are valid and authenticated.
+        Calls Django Auth login method to register User ID
+        in Django session framework
+
+        Accept the following POST parameters: username, password
+        Return the REST Framework Token Object's key.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
+  /api/dj-rest-auth/logout/:
+    post:
+      operationId: api_dj_rest_auth_logout_create
+      description: |-
+        Calls Django logout method and delete the Token object
+        assigned to the current User object.
+
+        Accepts/Returns nothing.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /api/dj-rest-auth/password/change/:
+    post:
+      operationId: api_dj_rest_auth_password_change_create
+      description: |-
+        Calls Django Auth SetPasswordForm save method.
+
+        Accepts the following POST parameters: new_password1, new_password2
+        Returns the success/fail message.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /api/dj-rest-auth/password/reset/:
+    post:
+      operationId: api_dj_rest_auth_password_reset_create
+      description: |-
+        Calls Django Auth PasswordResetForm save method.
+
+        Accepts the following POST parameters: email
+        Returns the success/fail message.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /api/dj-rest-auth/password/reset/confirm/:
+    post:
+      operationId: api_dj_rest_auth_password_reset_confirm_create
+      description: |-
+        Password reset e-mail link is confirmed, therefore
+        this resets the user's password.
+
+        Accepts the following POST parameters: token, uid,
+            new_password1, new_password2
+        Returns the success/fail message.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /api/dj-rest-auth/registration/:
+    post:
+      operationId: api_dj_rest_auth_registration_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
+  /api/dj-rest-auth/registration/resend-email/:
+    post:
+      operationId: api_dj_rest_auth_registration_resend_email_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendEmailVerification'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResendEmailVerification'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResendEmailVerification'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /api/dj-rest-auth/registration/verify-email/:
+    post:
+      operationId: api_dj_rest_auth_registration_verify_email_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAuthDetail'
+          description: ''
+  /api/dj-rest-auth/user/:
+    get:
+      operationId: api_dj_rest_auth_user_retrieve
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+          description: ''
+    put:
+      operationId: api_dj_rest_auth_user_update
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserDetails'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+          description: ''
+    patch:
+      operationId: api_dj_rest_auth_user_partial_update
+      description: |-
+        Reads and updates UserModel fields
+        Accepts GET, PUT, PATCH methods.
+
+        Default accepted fields: username, first_name, last_name
+        Default display fields: pk, username, email, first_name, last_name
+        Read-only fields: pk, email
+
+        Returns UserModel fields.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetails'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+          description: ''
+  /apis/cours:
+    get:
+      operationId: apis_cours_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cours'
+          description: ''
+    post:
+      operationId: apis_cours_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cours'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Cours'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Cours'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cours'
+          description: ''
+  /apis/cours/{id}:
+    get:
+      operationId: apis_cours_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cours'
+          description: ''
+  /apis/cours/{id}/del:
+    delete:
+      operationId: apis_cours_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/cours/{id}/update:
+    get:
+      operationId: apis_cours_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cours'
+          description: ''
+    put:
+      operationId: apis_cours_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cours'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Cours'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Cours'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cours'
+          description: ''
+    patch:
+      operationId: apis_cours_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCours'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCours'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCours'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cours'
+          description: ''
+  /apis/cours/add:
+    post:
+      operationId: apis_cours_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cours'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Cours'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Cours'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cours'
+          description: ''
+  /apis/departement:
+    get:
+      operationId: apis_departement_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Departement'
+          description: ''
+    post:
+      operationId: apis_departement_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Departement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Departement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Departement'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departement'
+          description: ''
+  /apis/departement/{id}:
+    get:
+      operationId: apis_departement_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departement'
+          description: ''
+  /apis/departement/{id}/del:
+    delete:
+      operationId: apis_departement_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/departement/{id}/update:
+    get:
+      operationId: apis_departement_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departement'
+          description: ''
+    put:
+      operationId: apis_departement_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Departement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Departement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Departement'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departement'
+          description: ''
+    patch:
+      operationId: apis_departement_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDepartement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDepartement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDepartement'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departement'
+          description: ''
+  /apis/departement/add:
+    post:
+      operationId: apis_departement_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Departement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Departement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Departement'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departement'
+          description: ''
+  /apis/enseignant:
+    get:
+      operationId: apis_enseignant_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Enseignant'
+          description: ''
+    post:
+      operationId: apis_enseignant_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enseignant'
+          description: ''
+  /apis/enseignant/{id}:
+    get:
+      operationId: apis_enseignant_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enseignant'
+          description: ''
+  /apis/enseignant/{id}/del:
+    delete:
+      operationId: apis_enseignant_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/enseignant/{id}/update:
+    get:
+      operationId: apis_enseignant_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enseignant'
+          description: ''
+    put:
+      operationId: apis_enseignant_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enseignant'
+          description: ''
+    patch:
+      operationId: apis_enseignant_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEnseignant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEnseignant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEnseignant'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enseignant'
+          description: ''
+  /apis/enseignant/add:
+    post:
+      operationId: apis_enseignant_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Enseignant'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enseignant'
+          description: ''
+  /apis/etudiant:
+    get:
+      operationId: apis_etudiant_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Etudiant'
+          description: ''
+    post:
+      operationId: apis_etudiant_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etudiant'
+          description: ''
+  /apis/etudiant/{id}:
+    get:
+      operationId: apis_etudiant_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etudiant'
+          description: ''
+  /apis/etudiant/{id}/del:
+    delete:
+      operationId: apis_etudiant_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/etudiant/{id}/update:
+    get:
+      operationId: apis_etudiant_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etudiant'
+          description: ''
+    put:
+      operationId: apis_etudiant_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etudiant'
+          description: ''
+    patch:
+      operationId: apis_etudiant_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEtudiant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEtudiant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEtudiant'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etudiant'
+          description: ''
+  /apis/etudiant/add:
+    post:
+      operationId: apis_etudiant_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Etudiant'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Etudiant'
+          description: ''
+  /apis/event:
+    get:
+      operationId: apis_event_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Evenement'
+          description: ''
+    post:
+      operationId: apis_event_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evenement'
+          description: ''
+  /apis/event/{id}:
+    get:
+      operationId: apis_event_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evenement'
+          description: ''
+  /apis/event/{id}/del:
+    delete:
+      operationId: apis_event_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/event/{id}/update:
+    get:
+      operationId: apis_event_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evenement'
+          description: ''
+    put:
+      operationId: apis_event_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evenement'
+          description: ''
+    patch:
+      operationId: apis_event_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEvenement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEvenement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEvenement'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evenement'
+          description: ''
+  /apis/event/add:
+    post:
+      operationId: apis_event_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Evenement'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evenement'
+          description: ''
+  /apis/exam:
+    get:
+      operationId: apis_exam_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exam'
+          description: ''
+    post:
+      operationId: apis_exam_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+  /apis/exam/{id}:
+    get:
+      operationId: apis_exam_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+  /apis/exam/{id}/del:
+    delete:
+      operationId: apis_exam_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/exam/{id}/update:
+    get:
+      operationId: apis_exam_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+    put:
+      operationId: apis_exam_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+    patch:
+      operationId: apis_exam_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedExam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedExam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedExam'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+  /apis/exam/add:
+    post:
+      operationId: apis_exam_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+  /apis/filiere:
+    get:
+      operationId: apis_filiere_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filiere'
+          description: ''
+    post:
+      operationId: apis_filiere_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filiere'
+          description: ''
+  /apis/filiere/{id}:
+    get:
+      operationId: apis_filiere_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filiere'
+          description: ''
+  /apis/filiere/{id}/del:
+    delete:
+      operationId: apis_filiere_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/filiere/{id}/update:
+    get:
+      operationId: apis_filiere_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filiere'
+          description: ''
+    put:
+      operationId: apis_filiere_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filiere'
+          description: ''
+    patch:
+      operationId: apis_filiere_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFiliere'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFiliere'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFiliere'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filiere'
+          description: ''
+  /apis/filiere/add:
+    post:
+      operationId: apis_filiere_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Filiere'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filiere'
+          description: ''
+  /apis/salle:
+    get:
+      operationId: apis_salle_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Salle'
+          description: ''
+    post:
+      operationId: apis_salle_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Salle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Salle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Salle'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salle'
+          description: ''
+  /apis/salle/{id}:
+    get:
+      operationId: apis_salle_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salle'
+          description: ''
+  /apis/salle/{id}/del:
+    delete:
+      operationId: apis_salle_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/salle/{id}/update:
+    get:
+      operationId: apis_salle_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salle'
+          description: ''
+    put:
+      operationId: apis_salle_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Salle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Salle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Salle'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salle'
+          description: ''
+    patch:
+      operationId: apis_salle_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSalle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSalle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSalle'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salle'
+          description: ''
+  /apis/salle/add:
+    post:
+      operationId: apis_salle_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Salle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Salle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Salle'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salle'
+          description: ''
+  /apis/semestre:
+    get:
+      operationId: apis_semestre_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Semestre'
+          description: ''
+    post:
+      operationId: apis_semestre_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semestre'
+          description: ''
+  /apis/semestre/{id}:
+    get:
+      operationId: apis_semestre_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semestre'
+          description: ''
+  /apis/semestre/{id}/del:
+    delete:
+      operationId: apis_semestre_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/semestre/{id}/update:
+    get:
+      operationId: apis_semestre_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semestre'
+          description: ''
+    put:
+      operationId: apis_semestre_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semestre'
+          description: ''
+    patch:
+      operationId: apis_semestre_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSemestre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSemestre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSemestre'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semestre'
+          description: ''
+  /apis/semestre/add:
+    post:
+      operationId: apis_semestre_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Semestre'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semestre'
+          description: ''
+  /apis/user:
+    get:
+      operationId: apis_user_list
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+  /apis/user/{id}:
+    get:
+      operationId: apis_user_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /apis/user/{id}/del:
+    delete:
+      operationId: apis_user_del_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /apis/user/{id}/update:
+    get:
+      operationId: apis_user_update_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: apis_user_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: apis_user_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /apis/user/add:
+    post:
+      operationId: apis_user_add_create
+      tags:
+      - apis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+components:
+  schemas:
+    Cours:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        option:
+          type: string
+          readOnly: true
+        codeUe:
+          type: string
+          maxLength: 10
+        intitule:
+          type: string
+          maxLength: 50
+        prerequis:
+          type: string
+          maxLength: 150
+        semestre_evolution:
+          type: integer
+        semestre_etude:
+          type: integer
+        enseignant:
+          type: integer
+      required:
+      - codeUe
+      - enseignant
+      - id
+      - intitule
+      - option
+      - semestre_etude
+      - semestre_evolution
+    Departement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeDep:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 250
+      required:
+      - codeDep
+      - id
+      - nom
+    DisponibiliteEnum:
+      enum:
+      - oui
+      - non
+      type: string
+      description: |-
+        * `oui` - Oui
+        * `non` - Non
+    Enseignant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 100
+        mail:
+          type: string
+          format: email
+          maxLength: 25
+        contact:
+          type: string
+          maxLength: 50
+        adresse:
+          type: string
+          maxLength: 50
+        disponibilite:
+          $ref: '#/components/schemas/DisponibiliteEnum'
+      required:
+      - adresse
+      - contact
+      - id
+      - mail
+      - nom
+    EtatEnum:
+      enum:
+      - lib
+      - occ
+      - res
+      type: string
+      description: |-
+        * `lib` - Libre
+        * `occ` - Occupée
+        * `res` - Reservée
+    Etudiant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        numCarte:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        nom:
+          type: string
+          maxLength: 100
+        mail:
+          type: string
+          format: email
+          maxLength: 25
+        date_naissance:
+          type: string
+          format: date
+        contact:
+          type: string
+          maxLength: 50
+        adresse:
+          type: string
+          maxLength: 50
+        semestre:
+          type: integer
+      required:
+      - adresse
+      - contact
+      - date_naissance
+      - id
+      - mail
+      - nom
+      - numCarte
+      - semestre
+    Evenement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 25
+        date:
+          type: string
+          format: date
+        duree:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        debut:
+          type: string
+          format: date-time
+          readOnly: true
+        fin:
+          type: string
+          format: date-time
+          readOnly: true
+        salle:
+          type: integer
+      required:
+      - date
+      - debut
+      - description
+      - duree
+      - fin
+      - id
+      - nom
+      - salle
+    Exam:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeExam:
+          type: string
+          maxLength: 10
+        date:
+          type: string
+          format: date
+        debut:
+          type: string
+          format: date-time
+          readOnly: true
+        fin:
+          type: string
+          format: date-time
+          readOnly: true
+        cours:
+          type: integer
+        filiere:
+          type: array
+          items:
+            type: integer
+      required:
+      - codeExam
+      - cours
+      - date
+      - debut
+      - filiere
+      - fin
+      - id
+    Filiere:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        parcours:
+          type: string
+          readOnly: true
+        departement:
+          type: string
+          readOnly: true
+        codeFiliere:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 100
+      required:
+      - codeFiliere
+      - departement
+      - id
+      - nom
+      - parcours
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - password
+    PasswordChange:
+      type: object
+      properties:
+        new_password1:
+          type: string
+          maxLength: 128
+        new_password2:
+          type: string
+          maxLength: 128
+      required:
+      - new_password1
+      - new_password2
+    PasswordReset:
+      type: object
+      description: Serializer for requesting a password reset e-mail.
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    PasswordResetConfirm:
+      type: object
+      description: Serializer for confirming a password reset attempt.
+      properties:
+        new_password1:
+          type: string
+          maxLength: 128
+        new_password2:
+          type: string
+          maxLength: 128
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - new_password1
+      - new_password2
+      - token
+      - uid
+    PatchedCours:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        option:
+          type: string
+          readOnly: true
+        codeUe:
+          type: string
+          maxLength: 10
+        intitule:
+          type: string
+          maxLength: 50
+        prerequis:
+          type: string
+          maxLength: 150
+        semestre_evolution:
+          type: integer
+        semestre_etude:
+          type: integer
+        enseignant:
+          type: integer
+    PatchedDepartement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeDep:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 250
+    PatchedEnseignant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 100
+        mail:
+          type: string
+          format: email
+          maxLength: 25
+        contact:
+          type: string
+          maxLength: 50
+        adresse:
+          type: string
+          maxLength: 50
+        disponibilite:
+          $ref: '#/components/schemas/DisponibiliteEnum'
+    PatchedEtudiant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        numCarte:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        nom:
+          type: string
+          maxLength: 100
+        mail:
+          type: string
+          format: email
+          maxLength: 25
+        date_naissance:
+          type: string
+          format: date
+        contact:
+          type: string
+          maxLength: 50
+        adresse:
+          type: string
+          maxLength: 50
+        semestre:
+          type: integer
+    PatchedEvenement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 25
+        date:
+          type: string
+          format: date
+        duree:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        debut:
+          type: string
+          format: date-time
+          readOnly: true
+        fin:
+          type: string
+          format: date-time
+          readOnly: true
+        salle:
+          type: integer
+    PatchedExam:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeExam:
+          type: string
+          maxLength: 10
+        date:
+          type: string
+          format: date
+        debut:
+          type: string
+          format: date-time
+          readOnly: true
+        fin:
+          type: string
+          format: date-time
+          readOnly: true
+        cours:
+          type: integer
+        filiere:
+          type: array
+          items:
+            type: integer
+    PatchedFiliere:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        parcours:
+          type: string
+          readOnly: true
+        departement:
+          type: string
+          readOnly: true
+        codeFiliere:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 100
+    PatchedSalle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeSalle:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 50
+        capacite:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        localisation:
+          type: string
+          maxLength: 100
+        disponibilite:
+          $ref: '#/components/schemas/DisponibiliteEnum'
+        etat:
+          $ref: '#/components/schemas/EtatEnum'
+    PatchedSemestre:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeSem:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 50
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        adresse:
+          type: string
+          maxLength: 100
+        contact:
+          type: string
+          maxLength: 50
+    PatchedUserDetails:
+      type: object
+      description: User model w/o password
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: Id
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+    Register:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 150
+          minLength: 1
+        email:
+          type: string
+          format: email
+        password1:
+          type: string
+          writeOnly: true
+        password2:
+          type: string
+          writeOnly: true
+      required:
+      - password1
+      - password2
+      - username
+    ResendEmailVerification:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+    RestAuthDetail:
+      type: object
+      properties:
+        detail:
+          type: string
+          readOnly: true
+      required:
+      - detail
+    Salle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeSalle:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 50
+        capacite:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        localisation:
+          type: string
+          maxLength: 100
+        disponibilite:
+          $ref: '#/components/schemas/DisponibiliteEnum'
+        etat:
+          $ref: '#/components/schemas/EtatEnum'
+      required:
+      - capacite
+      - codeSalle
+      - id
+      - localisation
+      - nom
+    Semestre:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        codeSem:
+          type: string
+          maxLength: 10
+        nom:
+          type: string
+          maxLength: 50
+      required:
+      - codeSem
+      - id
+      - nom
+    Token:
+      type: object
+      description: Serializer for Token model.
+      properties:
+        key:
+          type: string
+          maxLength: 40
+      required:
+      - key
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nom:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        adresse:
+          type: string
+          maxLength: 100
+        contact:
+          type: string
+          maxLength: 50
+      required:
+      - contact
+      - id
+      - nom
+    UserDetails:
+      type: object
+      description: User model w/o password
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: Id
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+      required:
+      - email
+      - pk
+      - username
+    VerifyEmail:
+      type: object
+      properties:
+        key:
+          type: string
+          writeOnly: true
+      required:
+      - key
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

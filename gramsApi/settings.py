@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "allauth.account", # new for token authentification
     "allauth.socialaccount", # new for token authentification
     "dj_rest_auth.registration", # new for token authentification
+    "drf_spectacular", # for schema
 
 
     # local
@@ -67,7 +68,15 @@ REST_FRAMEWORK = {      # added
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication", # new
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema", # for schema
 
+}
+
+SPECTACULAR_SETTINGS = {    #for schema
+    "TITLE": "Grams API Project",
+    "DESCRIPTION": "A sample project to resolve school problems",
+    "VERSION": "1.0.0",
+    # OTHER SETTINGS
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend", # for token autheti
