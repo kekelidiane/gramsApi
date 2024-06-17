@@ -37,21 +37,42 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.postgres', #added
+    'django.contrib.postgres', #added for bd
+    "django.contrib.sites", # new for token authentification
+
     
+    # needed depen..
     'rest_framework',
     'corsheaders',
-    
+    "rest_framework.authtoken", 
+    "dj_rest_auth", 
+    "allauth", # new for token authentification
+    "allauth.account", # new for token authentification
+    "allauth.socialaccount", # new for token authentification
+    "dj_rest_auth.registration", # new for token authentification
+
+
+    # local
     'accounts',
     'apis',
     'grams',
 ]
 
 REST_FRAMEWORK = {      # added 
+    
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated", 
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication", # new
+    ],
+
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend", # for token autheti
+
+SITE_ID = 1 # idem
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]    # added
 
@@ -64,7 +85,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    'corsheaders.middleware.CorsMiddleware',   #added 
+    'corsheaders.middleware.CorsMiddleware',   #added
+    'allauth.account.middleware.AccountMiddleware', 
 ]
 
 CORS_ORIGIN_WHITELIST = (
@@ -84,6 +106,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.request", # new for token authentification
+
             ],
         },
     },

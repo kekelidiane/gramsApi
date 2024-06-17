@@ -7,7 +7,7 @@ from accounts.models import CustomUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'name', 'email', 'address', 'phone']
+        fields = ['id', 'nom', 'email', 'adresse', 'contact']
 
 #--------------------------------------------------
 
@@ -33,21 +33,30 @@ class EnseignantSerializer(serializers.ModelSerializer):
 #--------------------------------------------------
 
 class FiliereSerializer(serializers.ModelSerializer):
+    parcours = serializers.SerializerMethodField()
+    departement = serializers.SerializerMethodField()
+
     class Meta:
         model = Filiere
         fields = '__all__'
+    
+    def get_parcours(self, obj):
+        return obj.parcours.nom
+
+    def get_departement(self, obj):
+        return obj.departement.nom
 
 #--------------------------------------------------
 
 class CoursSerializer(serializers.ModelSerializer):
-    option = serializers.SerializerMethodField()
+    option = serializers.SerializerMethodField() # et le def permettent d'afficher les noms des attributs et non leur id dans la recup
 
     class Meta:
         model = Cours
         fields = '__all__'
         
     def get_option(self, obj):
-        return [filiere.nom for filiere in obj.option.all()]
+        return obj.option.nom
 #--------------------------------------------------
 
 class ExamSerializer(serializers.ModelSerializer):
