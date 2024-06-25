@@ -141,28 +141,28 @@ class DeleteExam(generics.DestroyAPIView):
         
 #------------------------------------------------------------------------------------
     
-class EvenementAPIView(generics.ListCreateAPIView):
-    queryset = Evenement.objects.all()
-    serializer_class = EvenementSerializer
+class ReservationAPIView(generics.ListCreateAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
         
-class CreateEvenement(generics.CreateAPIView):
-    queryset = Evenement.objects.all()
-    serializer_class = EvenementSerializer
+class CreateReservation(generics.CreateAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
     permission_classes = (permissions.IsAdminUser,)
     
-class EvenementDetail(generics.RetrieveAPIView):
-    queryset = Evenement.objects.all()
-    serializer_class = EvenementSerializer
+class ReservationDetail(generics.RetrieveAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
     permission_classes = (permissions.IsAdminUser,)
     
-class UpdateEvenement(generics.RetrieveUpdateAPIView):
-    queryset = Evenement.objects.all()
-    serializer_class = EvenementSerializer
+class UpdateReservation(generics.RetrieveUpdateAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
     permission_classes = (permissions.IsAdminUser,)
     
-class DeleteEvenement(generics.DestroyAPIView):
-    queryset = Evenement.objects.all()
-    serializer_class = EvenementSerializer
+class DeleteReservation(generics.DestroyAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
     permission_classes = (permissions.IsAdminUser,)
         
 #------------------------------------------------------------------------------------

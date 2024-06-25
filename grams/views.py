@@ -56,12 +56,12 @@ class ExamDetailView(DetailView):
     template_name = 'detail.html'
     
 #--------------------------------------    
-class EvenementListView(ListView):
-    model = Evenement
+class ReservationListView(ListView):
+    model = Reservation
     template_name = 'list.html'
 
-class EvenementDetailView(DetailView):
-    model = Evenement
+class ReservationDetailView(DetailView):
+    model = Reservation
     template_name = 'detail.html'
     context_object_name = 'event'
     

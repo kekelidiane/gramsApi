@@ -20,8 +20,8 @@ urlpatterns = [
     path('classroom', SalleListView.as_view(), name='list'),
     path('classroom/<int:pk>', SalleDetailView.as_view(), name='detail'),
 
-    path('event', EvenementListView.as_view(), name='list'),
-    path('event/<int:pk>', EvenementDetailView.as_view(), name='detail'),
+    path('event', ReservationListView.as_view(), name='list'),
+    path('event/<int:pk>', ReservationDetailView.as_view(), name='detail'),
 
     path('user', UserListView.as_view(), name='list'),
     path('user/<int:pk>', UserDetailView.as_view(), name='detail'),

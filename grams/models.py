@@ -43,7 +43,7 @@ class Etudiant(models.Model):
     id = models.AutoField(primary_key=True, editable=False, auto_created=True)
     numCarte = models.IntegerField()
     nom = models.CharField(max_length=100)
-    mail = models.EmailField(max_length=25)
+    email = models.EmailField(max_length=25)
     date_naissance = models.DateField()
     contact = models.CharField(max_length=50)
     adresse = models.CharField(max_length=50)
@@ -55,7 +55,7 @@ class Etudiant(models.Model):
 class Enseignant(models.Model):
     id = models.AutoField(primary_key=True, editable=False, auto_created=True)
     nom = models.CharField(max_length=100)
-    mail = models.EmailField(max_length=25)
+    email = models.EmailField(max_length=25)
     contact = models.CharField(max_length=50)
     adresse = models.CharField(max_length=50)
     disponibilite = models.CharField(
@@ -119,7 +119,7 @@ class Exam(models.Model):
     def __str__(self):
         return self.codeExam    
     
-class Evenement(models.Model):
+class Reservation(models.Model):
     id = models.AutoField(primary_key=True, editable=False, auto_created=True)
     nom = models.CharField(max_length=100)
     salle = models.ForeignKey(Salle, on_delete=models.CASCADE)

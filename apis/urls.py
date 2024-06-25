@@ -43,13 +43,13 @@ urlpatterns = [
     path('exam/<int:pk>/update', UpdateExam.as_view(), name='update_exam'),
     path('exam/<int:pk>/del', DeleteExam.as_view(), name='delete_exam'),
 
-#--------------------------------urls des evenements----------------------------------
+#--------------------------------urls des reservations----------------------------------
 
-    path('event', EvenementAPIView.as_view(), name='list'),
-    path('event/<int:pk>', EvenementDetail.as_view(), name='event_detail'),
-    path('event/add', CreateEvenement.as_view(), name='create_event'),
-    path('event/<int:pk>/update', UpdateEvenement.as_view(), name='update_event'),
-    path('event/<int:pk>/del', DeleteEvenement.as_view(), name='delete_event'),
+    path('reservation', ReservationAPIView.as_view(), name='list'),
+    path('event/<int:pk>', ReservationDetail.as_view(), name='event_detail'),
+    path('event/add', CreateReservation.as_view(), name='create_event'),
+    path('event/<int:pk>/update', UpdateReservation.as_view(), name='update_event'),
+    path('event/<int:pk>/del', DeleteReservation.as_view(), name='delete_event'),
 
 #--------------------------------urls des semestres----------------------------------
 

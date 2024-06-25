@@ -38,19 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres', #added for bd
-    "django.contrib.sites", # new for token authentification
 
     
     # needed depen..
     'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
-    "rest_framework.authtoken", 
-    "dj_rest_auth", 
     "allauth", # new for token authentification
-    "allauth.account", # new for token authentification
-    "allauth.socialaccount", # new for token authentification
-    "dj_rest_auth.registration", # new for token authentification
     "drf_spectacular", # for schema
+
 
 
     # local
@@ -59,24 +56,42 @@ INSTALLED_APPS = [
     'grams',
 ]
 
-REST_FRAMEWORK = {      # added 
+REST_FRAMEWORK = {      # added
     
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated", 
     ],
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication", # new
-    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema", # for schema
 
 }
 
+from datetime import timedelta
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+}
+
 SPECTACULAR_SETTINGS = {    #for schema
     "TITLE": "Grams API Project",
-    "DESCRIPTION": "A sample project to resolve school problems",
+    "DESCRIPTION": "A simple project to resolve school problems",
     "VERSION": "1.0.0",
-    # OTHER SETTINGS
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend", # for token autheti
@@ -115,7 +130,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "django.template.context_processors.request", # new for token authentification
 
             ],
         },

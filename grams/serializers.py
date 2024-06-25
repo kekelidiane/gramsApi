@@ -1,13 +1,45 @@
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 
 from .models import *
 from accounts.models import CustomUser
 
 #--------------------------------------------------
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ('nom', 'email', 'password', 'contact', 'adresse')
+
+    def create(self, validated_data):
+        user = CustomUser.objects.create_user(
+            nom=validated_data['nom'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            contact=validated_data['contact'],
+            adresse=validated_data['adresse'],
+        )
+        return user
+
+#--------------------------------------------------
+
+class LoginSerializer(serializers.Serializer):
+    nom = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = authenticate(**data)
+        if user and user.is_active:
+            return user
+        raise serializers.ValidationError("Utilisateur ou Mot de passe incorrect!")
+
+#--------------------------------------------------
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'nom', 'email', 'adresse', 'contact']
+        fields = ['id', 'nom', 'mail', 'adresse', 'contact']
 
 #--------------------------------------------------
 
@@ -66,9 +98,9 @@ class ExamSerializer(serializers.ModelSerializer):
 
 #--------------------------------------------------
 
-class EvenementSerializer(serializers.ModelSerializer):
+class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Evenement
+        model = Reservation
         fields = '__all__'
 
 #--------------------------------------------------
@@ -84,4 +116,5 @@ class DepartementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departement
         fields = '__all__'
+
 
