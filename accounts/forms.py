@@ -4,13 +4,14 @@ from django import forms
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
+    username = forms.EmailField(label='Email', max_length=254)
+    
     class Meta(UserCreationForm):
         model = CustomUser
-        fields = UserCreationForm._meta.fields + ('nom',)
+        fields = ('nom', 'email', 'contact', 'date_naissance', 'adresse', 'type_compte')
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = '__all__'
-        # fields = UserChangeForm._meta.fields
+        fields = ('nom', 'email', 'contact', 'date_naissance', 'adresse', 'type_compte', 'is_staff', 'is_superuser')
